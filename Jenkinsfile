@@ -6,12 +6,12 @@ pipeline {
         }
     }
     environment {
-        Project = "roboshop"
-        Component = "catalogue"
-        Environment = "dev"
-        App_Version = ""
-        Acc_ID = "064629264387"
-        Region = "us-east-1"
+        PROJECT = "roboshop"
+        COMPONENT = "catalogue"
+        ENVIRONMENT = "dev"
+        APP_VERSION = ""
+        ACC_ID = "064629264387"
+        REGION = "us-east-1"
     }
     options{
         timeout(time: 30, unit: 'MINUTES') 
@@ -27,8 +27,8 @@ pipeline {
             steps{
                 script{
                     def packageJSON = readJSON file: 'package.json'
-                    App_Version = packageJSON.version
-                    echo "App Version: ${App_Version}"
+                    APP_VERSION = packageJSON.version
+                    echo "App Version: ${APP_VERSION}"
                 }
             }
 
@@ -77,12 +77,12 @@ pipeline {
         stage('Build'){
             steps{
                 script{
-                    withAWS(Region: 'us-east-1', credentials: 'aws-creds'){
+                    withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                         sh """
-                        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${Acc_ID}.dkr.ecr.us-east-1.amazonaws.com
-                        docker build -t ${Acc_ID}.dkr.ecr.us-east-1.amazonaws.com/${Project}/${Component}:${App_Version} .
+                        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                        docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${APP_VERSION} .
                         docker images
-                        docker push ${Acc_ID}.dkr.ecr.us-east-1.amazonaws.com/${Project}/${Component}:${App_Version}
+                        docker push ${Acc_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${APP_VERSION}
                         """
                     }
                 }
