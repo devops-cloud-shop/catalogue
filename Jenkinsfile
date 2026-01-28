@@ -9,7 +9,7 @@ pipeline {
         PROJECT = "roboshop"
         COMPONENT = "catalogue"
         ENVIRONMENT = "dev"
-        APP_VERSION = ""
+        APP_VERSION = "1.0.0"
         ACC_ID = "064629264387"
         REGION = "us-east-1"
     }
@@ -54,7 +54,7 @@ pipeline {
         //Here you need to select scanner tool and send analysis to server//
         stage('sonar_scan'){
             environment{
-                def scannerHome = tool 'sonar-8.0'
+                def scannerHome = tool 'sonar-5.0'
             }
             steps{
                 script{
