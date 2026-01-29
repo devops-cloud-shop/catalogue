@@ -93,7 +93,7 @@ pipeline {
     post{
         always{
             echo 'I will always say Hello again'
-            cleanws()
+            cleanWs()
         }
         success{
             echo 'I will run if success'
