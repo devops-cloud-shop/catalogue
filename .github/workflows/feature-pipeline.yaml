@@ -1,5 +1,5 @@
 name: feature-pipeline
-on: [push] #branch /event
+on: [push]
 permissions:
     contents: read
     statuses: write
@@ -8,6 +8,15 @@ jobs:
   feature-pipeline:
     if: github.ref != 'refs/heads/main'
     uses: devops-cloud-shop/reusable-workflows/.github/workflows/nodeJS-feature-pipeline.yaml@main
+    with:
+      project: roboshop
+      component: catalogue
+      environment: dev
+    secrets: inherit
+
+  dev-pipeline:
+    if: github.ref == 'refs/heads/main'
+    uses: devops-cloud-shop/reusable-workflows/.github/workflows/DEV-nodeJS-pipeline.yaml@main
     with:
       project: roboshop
       component: catalogue
