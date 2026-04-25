@@ -1,6 +1,6 @@
 FROM node:20.19.5-alpine3.22 AS build
 WORKDIR /opt/server
-RUN apk update && apk upgrade
+
 COPY package.json .
 COPY *.js .
 RUN npm install
@@ -9,7 +9,9 @@ RUN npm install
 FROM node:20.19.5-alpine3.22 AS final
 WORKDIR /opt/server
 
-RUN addgroup -S roboshop && adduser -S roboshop -G roboshop && \
+RUN apk update && apk upgrade --available && \
+    addgroup -S roboshop && \
+    adduser -S roboshop -G roboshop && \
     chown -R roboshop:roboshop /opt/server
 
 EXPOSE 8080/tcp
