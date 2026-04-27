@@ -13,7 +13,7 @@ jobs:
       component: catalogue
       environment: dev
     secrets: inherit
-#if commit is made to main branch, dev-pipeline  is triggered.
+#if commit is made to main branch, dev-pipeline is triggered.
   dev-pipeline:
     if: github.ref == 'refs/heads/main'
     uses: devops-cloud-shop/reusable-workflows/.github/workflows/DEV-nodeJS-pipeline.yaml@main
